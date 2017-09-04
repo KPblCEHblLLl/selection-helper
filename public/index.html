@@ -3,8 +3,42 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Title</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<style>
+		html, body {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		form {
+			padding: 10px;
+			box-sizing: border-box;
+		}
+
+		textarea {
+			max-width: 100%;
+		}
+
+		.log-item {
+			margin-top: 20px;
+		}
+	</style>
 </head>
 <body>
-someTitle
+<form id="editor">
+	<input type="hidden" name="id" value=""/>
+	<label>Title
+		<textarea name="title" style="width: 100%; height: 50px;"></textarea>
+	</label>
+	<label>Text
+		<textarea name="text" style="height: 300px; width: 100%"></textarea>
+	</label>
+	<button type="submit">Send</button>
+</form>
+<div id="log-list"></div>
+
+<script src="main.js"></script>
 </body>
 </html>

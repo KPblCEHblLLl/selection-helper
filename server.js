@@ -8,16 +8,22 @@ var LogItemModel = require('./libs/mongoose').LogItemModel;
 
 var app = express();
 
-app.use(bodyParser); // стандартный модуль, для парсинга JSON в запросах
+app.use(bodyParser.urlencoded({extended: true})); // стандартный модуль, для парсинга JSON в запросах
 // app.use(methodOverride('X-HTTP-Method-Override', {methods: ['POST', 'PUT', 'DELETE']})); // поддержка put и delete
 app.use(express.static(path.join(__dirname, "public"))); // запуск статического файлового сервера, который смотрит на папку public/ (в нашем случае отдает index.html)
 
-app.get('/api', function (req, res) {
+app.get('/api', function(req, res) {
 	res.send('API is running');
 });
 
-app.get('/api/log-item', function (req, res) {
-	return LogItemModel.find(function (err, logItemsList) {
+app.get('/api/log-item', function(req, res) {
+	return LogItemModel.find(null, null, {
+		skip: 0, // Starting Row
+		limit: 10, // Ending Row
+		sort: {
+			created: -1 //Sort by Date Added DESC
+		}
+	}, function(err, logItemsList) {
 		if (!err) {
 			return res.send(logItemsList);
 		} else {
@@ -28,13 +34,13 @@ app.get('/api/log-item', function (req, res) {
 	})
 });
 
-app.post('/api/log-item', function (req, res) {
+app.post('/api/log-item', function(req, res) {
 	var logItem = new LogItemModel({
 		title: req.body.title,
-		text: req.body.author,
+		text: req.body.text,
 	});
 
-	logItem.save(function (err) {
+	logItem.save(function(err) {
 		if (!err) {
 			log.info("log item created");
 			return res.send({status: 'OK', logItem: logItem});
@@ -52,8 +58,8 @@ app.post('/api/log-item', function (req, res) {
 	});
 });
 
-app.get('/api/log-item/:id', function (req, res) {
-	return LogItemModel.findById(req.params.id, function (err, logItem) {
+app.get('/api/log-item/:id', function(req, res) {
+	return LogItemModel.findById(req.params.id, function(err, logItem) {
 		if (!logItem) {
 			res.statusCode = 404;
 			return res.send({error: 'Not found'});
@@ -68,18 +74,18 @@ app.get('/api/log-item/:id', function (req, res) {
 	});
 });
 
-app.put('/api/log-item/:id', function (req, res) {
-	return LogItemModel.findById(req.params.id, function (err, logItem) {
+app.put('/api/log-item/:id', function(req, res) {
+	return LogItemModel.findById(req.params.id, function(err, logItem) {
 		if (!logItem) {
 			res.statusCode = 404;
 			return res.send({error: 'Not found'});
 		}
 
 		logItem.title = req.body.title;
-		logItem.description = req.body.description;
+		logItem.text = req.body.text;
 		delete logItem.modified;
 
-		return logItem.save(function (err) {
+		return logItem.save(function(err) {
 			if (!err) {
 				log.info("logItem updated");
 				return res.send({status: 'OK', logItem: logItem});
@@ -97,42 +103,42 @@ app.put('/api/log-item/:id', function (req, res) {
 	});
 });
 
-app.delete('/api/log-item/:id', function (req, res) {
-	return LogItemModel.findById(req.params.id, function (err, logItem) {
-		if(!logItem) {
+app.delete('/api/log-item/:id', function(req, res) {
+	return LogItemModel.findById(req.params.id, function(err, logItem) {
+		if (!logItem) {
 			res.statusCode = 404;
-			return res.send({ error: 'Not found' });
+			return res.send({error: 'Not found'});
 		}
-		return logItem.remove(function (err) {
+		return logItem.remove(function(err) {
 			if (!err) {
 				log.info("logItem removed");
-				return res.send({ status: 'OK' });
+				return res.send({status: 'OK'});
 			} else {
 				res.statusCode = 500;
-				log.error('Internal error(%d): %s',res.statusCode,err.message);
-				return res.send({ error: 'Server error' });
+				log.error('Internal error(%d): %s', res.statusCode, err.message);
+				return res.send({error: 'Server error'});
 			}
 		});
 	});
 });
 
 // app.listen(config.get("port"), function () {
-app.listen(1137, function () {
+app.listen(1137, function() {
 	console.log('Express server listening on port 1137');
 });
 
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
 	res.status(404);
 	log.debug('Not found URL: %s', req.url);
 	res.send({error: 'Not found'});
 });
 
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
 	res.status(err.status || 500);
 	log.error('Internal error(%d): %s', res.statusCode, err.message);
 	res.send({error: err.message});
 });
 
-app.get('/ErrorExample', function (req, res, next) {
+app.get('/ErrorExample', function(req, res, next) {
 	next(new Error('Random error!'));
 });
