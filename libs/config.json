@@ -1,0 +1,6 @@
+{
+  "port" : 1137,
+  "mongoose": {
+	"uri": "mongodb://localhost/selection-helper"
+  }
+}

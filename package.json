@@ -1,0 +1,18 @@
+{
+  "name": "selection-helper",
+  "repository": "https://github.com/KPblCEHblLLl/selection-helper",
+  "version": "0.0.1",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "http-server": "^0.10.0",
+    "method-override": "^2.3.9",
+    "mongodb": "^2.2.31",
+    "mongoose": "^4.11.10",
+    "nconf": "^0.8.4",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "webpack": "^3.5.5"
+  }
+}
