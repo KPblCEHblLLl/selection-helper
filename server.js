@@ -35,7 +35,7 @@ app.get('/api/log-item', function(req, res) {
 });
 
 app.post('/api/log-item', function(req, res) {
-	var logItem = new LogItemModel({
+	let logItem = new LogItemModel({
 		title: req.body.title,
 		text: req.body.text,
 	});

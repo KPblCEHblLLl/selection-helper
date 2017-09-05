@@ -51,7 +51,7 @@ function loadLog() {
 				"<div>" + logItem["text"].replace(/\n/g, "<br/>") + "</div>" +
 				"</div>"
 		});
-		log.html(items.join(""));
+		log.html(items.join("<hr/>"));
 	});
 }
 
