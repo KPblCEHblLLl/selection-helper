@@ -28,20 +28,25 @@ $(function() {
 		}
 		req.done(function() {
 			form.get(0).reset();
-			loadLog(log)
+			loadLog()
 		});
 		return false;
 	});
-	loadLog(log);
+	loadLog();
 
-	$("body").on("click", ".log-item .edit", editLogItem);
+	$("body")
+		.on("click", ".log-item .edit", editLogItem)
+		.on("click", ".log-item .delete", deleteLogItem);
 });
 
-function loadLog(log) {
+function loadLog() {
 	$.ajax("/api/log-item").done(function(resp) {
 		let items = resp.map(function(logItem) {
 			return "<div class='log-item' data-id='" + logItem._id + "'>" +
-					"<div class='edit'></div>" +
+				"<div class='buttons'>" +
+				"<div class='button edit'></div>" +
+				//"<div class='button delete'></div>" +
+				"</div>" +
 				logItem["created"] + " " + logItem["title"] +
 				"<div>" + logItem["text"].replace(/\n/g, "<br/>") + "</div>" +
 				"</div>"
@@ -51,7 +56,7 @@ function loadLog(log) {
 }
 
 function editLogItem() {
-	let id = $(this.parentElement).data("id");
+	let id = $(this).parents(".log-item").data("id");
 	initEdit(id);
 }
 
@@ -63,4 +68,16 @@ function initEdit(id) {
 		form.find("[name='text']").val(logItem.text);
 
 	})
+}
+
+function deleteLogItem() {
+	let id = $(this).parents(".log-item").data("id");
+	if (confirm("Удалить запись? Это будет не вернуть!")) {
+		$.ajax({
+			url: "/api/log-item/" + id,
+			method: "DELETE",
+		}).done(function() {
+			loadLog();
+		})
+	}
 }
