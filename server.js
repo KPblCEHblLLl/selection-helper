@@ -38,6 +38,7 @@ app.post('/api/log-item', function(req, res) {
 	let logItem = new LogItemModel({
 		title: req.body.title,
 		text: req.body.text,
+		tags: req.body.tags,
 	});
 
 	logItem.save(function(err) {
@@ -83,7 +84,8 @@ app.put('/api/log-item/:id', function(req, res) {
 
 		logItem.title = req.body.title;
 		logItem.text = req.body.text;
-		delete logItem.modified;
+		logItem.tags = req.body.tags;
+		logItem.modified = new Date();
 
 		return logItem.save(function(err) {
 			if (!err) {

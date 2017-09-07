@@ -46,12 +46,29 @@
         .delete {
             background-color: red;
         }
+        .tag {
+            background-color: #ff8047;
+            display: inline-block;
+            padding: 1px 3px;
+            border-radius: 30px;
+            color: whitesmoke;
+        }
     </style>
 </head>
 <body>
+
 <form id="editor">
     <input type="hidden" name="id" value=""/>
-    <label>Title
+    <label style="float: right;">
+        <select name="tags" multiple="multiple">
+            <option value=""></option>
+            <option value="clarity">Ясность</option>
+            <option value="whisper">Голос</option>
+            <option value="decomposition">Разбор</option>
+            <option value="practice">Практика</option>
+        </select>
+    </label>
+    <label style="display: block; margin-right: 100px;">Title
         <textarea name="title" style="width: 100%; height: 50px;"></textarea>
     </label>
     <label>Text
