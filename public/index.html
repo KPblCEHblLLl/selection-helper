@@ -41,9 +41,11 @@
         }
 
         .edit {
+	        display: none;
             background-color: deeppink;
         }
         .delete {
+	        display: none;
             background-color: red;
         }
         .tag {
@@ -53,6 +55,22 @@
             border-radius: 30px;
             color: whitesmoke;
         }
+        .title {
+	        font-style: italic;
+        }
+	    #editor {
+		    display: none;
+	    }
+
+	    body.editable .edit {
+		    display: block;
+	    }
+	    body.editable .delete {
+		    display: block;
+	    }
+	    body.editable #editor {
+		    display: block;
+	    }
     </style>
 </head>
 <body>
@@ -61,17 +79,6 @@
     <input type="hidden" name="id" value=""/>
     <label style="float: right;">
         <select name="tags" multiple="multiple">
-            <option value=""></option>
-            <option value="fragment">Фрагмент</option>
-            <option value="clarity">Ясность</option>
-            <option value="whisper">Голос</option>
-            <option value="decomposition">Разбор</option>
-            <option value="practice">Практика</option>
-            <option value="past">Прошлое</option>
-            <option value="ozv">ОзВ</option>
-            <option value="ne">НЭ</option>
-            <option value="morda">Морда</option>
-            <option value="ozf">ОзФ</option>
         </select>
     </label>
     <label style="display: block; margin-right: 100px;">Title
@@ -82,7 +89,13 @@
     </label>
     <button type="submit">Send</button>
 </form>
+<select id="tag-filter" multiple></select>
+<select id="sort-field">
+	<option value="created" selected>Дата создания</option>
+	<option value="modified">Дата модификации</option>
+</select>
 <div id="log-list"></div>
+<button id="load-more">Load More</button>
 
 <script src="main.js"></script>
 </body>

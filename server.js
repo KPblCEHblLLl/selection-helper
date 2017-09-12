@@ -17,11 +17,22 @@ app.get('/api', function(req, res) {
 });
 
 app.get('/api/log-item', function(req, res) {
-	return LogItemModel.find(null, null, {
-		skip: 0, // Starting Row
-		limit: 10, // Ending Row
+	let sortField = req.query["sortField"] || "created";
+	let filter = {};
+	let lastDate = req.query["lastDate"];
+	let tags = req.query["tags"];
+	if (tags) {
+		filter["tags"] = tags;
+	}
+	if (lastDate) {
+		filter[sortField] = {$lt: lastDate}
+	}
+
+	return LogItemModel.find(filter, null, {
+		skip: 0,
+		limit: 10,
 		sort: {
-			created: -1 //Sort by Date Added DESC
+			[sortField]: -1
 		}
 	}, function(err, logItemsList) {
 		if (!err) {

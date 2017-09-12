@@ -1,15 +1,47 @@
 let form = $();
+let tagFilter = $();
+let sortField = $();
 let log = $();
+let loadMore = $();
+let lastDate = null;
+
+let TAGS = {
+	"fragment": "Фрагмент",
+	"clarity": "Ясность",
+	"whisper": "Голос",
+	"decomposition": "Разбор",
+	"practice": "Практика",
+	"past": "Прошлое",
+	"ozv": "ОзВ",
+	"ne": "НЭ",
+	"morda": "Морда",
+	"ozf": "ОзФ",
+};
 
 $(function() {
+	if (location.search.indexOf("edit") !== -1) {
+		$("body").addClass("editable")
+	}
 	form = $("#editor");
+	tagFilter = $("#tag-filter");
+	sortField = $("#sort-field");
 	log = $("#log-list");
+	loadMore = $("#load-more");
+
+	let tagOptions = "<option></option>" + Object.keys(TAGS).map((key) => {
+		return "<option value='" + key + "'>" + TAGS[key] + "</option>"
+	}).join("");
+
+	form.find("[name='tags']").html(tagOptions);
+	tagFilter.html(tagOptions);
 
 	form.submit(function() {
 		let id = $(this).find("[name='id']").val();
 		let title = $(this).find("[name='title']").val();
 		let text = $(this).find("[name='text']").val();
-		let tags = $(this).find("[name='tags']").val().filter(function(i){return !!i});
+		let tags = $(this).find("[name='tags']").val().filter(function(i) {
+			return !!i
+		});
 
 		let data = {
 			title: title,
@@ -40,21 +72,51 @@ $(function() {
 	$("body")
 		.on("click", ".log-item .edit", editLogItem)
 		.on("click", ".log-item .delete", deleteLogItem);
+
+	tagFilter.on("change", loadLog);
+	sortField.on("change", loadLog);
+	loadMore.on('click', loadNextLog);
 });
 
 function loadLog() {
-	$.ajax("/api/log-item").done(function(resp) {
-		let items = resp.map(function(logItem) {
+	lastDate = null;
+	loadPage().done((items) => {
+		log.html(items.join("<hr/>"));
+	});
+}
+
+function loadNextLog() {
+	loadPage().done((items) => {
+		log.append("<hr/>" + items.join("<hr/>"));
+	});
+}
+
+function loadPage() {
+	let tags = tagFilter.val().filter((v) => !!v);
+	let data = {
+		"sortField": sortField.val()
+	};
+
+	if (tags.length) {
+		data.tags = tagFilter.val();
+	}
+	if (lastDate) {
+		data.lastDate = lastDate;
+	}
+	return $.get("/api/log-item", data).then(function(resp) {
+		lastDate = resp.length !== 0 ? resp[resp.length - 1][sortField.val()] : null;
+		return resp.map(function(logItem) {
 			return "<div class='log-item' data-id='" + logItem._id + "'>" +
 				"<div class='buttons'>" +
 				"<div class='button edit'></div>" +
 				// "<div class='button delete'></div>" +
 				"</div>" +
-				logItem["created"] + " " + logItem["title"] + " " + (logItem["tags"]).map(function(i){return "<span class='tag'>" + i + "</span>"}) +
+				"<div class='title'>" +
+				logItem["created"] + " " + logItem["title"] + " " + (logItem["tags"]).map((i) => "<span class='tag'>" + TAGS[i] + "</span>").join("") +
+				"</div>" +
 				"<div>" + logItem["text"].replace(/\n/g, "<br/>") + "</div>" +
 				"</div>"
 		});
-		log.html(items.join("<hr/>"));
 	});
 }
 
