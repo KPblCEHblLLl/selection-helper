@@ -17,7 +17,8 @@ var TAGS = {
 	"ozv": "ОзВ",
 	"ne": "НЭ",
 	"morda": "Морда",
-	"ozf": "ОзФ"
+	"ozf": "ОзФ",
+	"feeling": "Ощущение"
 };
 
 $(function () {
@@ -111,9 +112,15 @@ function loadPage() {
 			// "<div class='button delete'></div>" +
 			"</div>" + "<div class='title'>" + "<span class='date'>" + moment(logItem["created"]).format("DD MMM YY, HH:MM") + "</span>" + " " + logItem["title"] + " " + logItem["tags"].map(function (i) {
 				return "<span class='tag'>" + TAGS[i] + "</span>";
-			}).join("") + "</div>" + "<div>" + logItem["text"].replace(/\n/g, "<br/>") + "</div>" + "</div>";
+			}).join("") + "</div>" + "<div>" + formatText(logItem["text"]) + "</div>" + "</div>";
 		});
 	});
+}
+
+function formatText(text) {
+	text = text.replace(/\n/g, "<br/>");
+
+	return text;
 }
 
 function editLogItem(e) {
