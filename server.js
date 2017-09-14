@@ -1,16 +1,16 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
 // var methodOverride = require('method-override');
-var path = require('path'); // модуль для парсинга пути
-var log = require('./libs/log')(module);
-var config = require('./libs/config');
-var LogItemModel = require('./libs/mongoose').LogItemModel;
+const path = require('path'); // модуль для парсинга пути
+const log = require('./libs/log')(module);
+const config = require('./libs/config');
+const LogItemModel = require('./libs/mongoose').LogItemModel;
 
-var app = express();
+const app = express();
 
 app.use(bodyParser.urlencoded({extended: true})); // стандартный модуль, для парсинга JSON в запросах
 // app.use(methodOverride('X-HTTP-Method-Override', {methods: ['POST', 'PUT', 'DELETE']})); // поддержка put и delete
-app.use(express.static(path.join(__dirname, "public"))); // запуск статического файлового сервера, который смотрит на папку public/ (в нашем случае отдает index.html)
+app.use(express.static(path.join(__dirname, "dist/public"))); // запуск статического файлового сервера, который смотрит на папку public/ (в нашем случае отдает index.html)
 
 app.get('/api', function(req, res) {
 	res.send('API is running');
