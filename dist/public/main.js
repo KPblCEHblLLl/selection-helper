@@ -18,7 +18,8 @@ var TAGS = {
 	"ne": "НЭ",
 	"morda": "Морда",
 	"ozf": "ОзФ",
-	"feeling": "Ощущение"
+	"feeling": "Ощущение",
+	"develop": "Разработка"
 };
 
 $(function () {

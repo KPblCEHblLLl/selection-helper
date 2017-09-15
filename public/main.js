@@ -17,6 +17,7 @@ let TAGS = {
 	"morda": "Морда",
 	"ozf": "ОзФ",
 	"feeling": "Ощущение",
+	"develop": "Разработка",
 };
 
 $(function() {
