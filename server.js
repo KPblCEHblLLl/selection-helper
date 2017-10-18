@@ -22,7 +22,7 @@ app.get('/api/log-item', function(req, res) {
 	let lastDate = req.query["lastDate"];
 	let tags = req.query["tags"];
 	if (tags) {
-		filter["tags"] = tags;
+		filter["tags"] = {"$in": tags};
 	}
 	if (lastDate) {
 		filter[sortField] = {$lt: lastDate}

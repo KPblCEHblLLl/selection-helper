@@ -18,8 +18,10 @@ var TAGS = {
 	"ne": "НЭ",
 	"morda": "Морда",
 	"ozf": "ОзФ",
+	"fantasy": "Фантазия",
 	"feeling": "Ощущение",
-	"develop": "Разработка"
+	"develop": "Разработка",
+	"not-for-bodhi": "Ненаписанное Бодху"
 };
 
 $(function () {

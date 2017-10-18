@@ -16,8 +16,10 @@ let TAGS = {
 	"ne": "НЭ",
 	"morda": "Морда",
 	"ozf": "ОзФ",
+	"fantasy": "Фантазия",
 	"feeling": "Ощущение",
 	"develop": "Разработка",
+	"not-for-bodhi": "Ненаписанное Бодху",
 };
 
 $(function() {
