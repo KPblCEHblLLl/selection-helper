@@ -116,7 +116,7 @@ function loadPage() {
 				// "<div class='button delete'></div>" +
 				"</div>" +
 				"<div class='title'>" +
-				"<span class='date'>" + moment(logItem["created"]).format("DD MMM YY, HH:MM") + "</span>" + " " + logItem["title"] + " " + (logItem["tags"]).map((i) => "<span class='tag'>" + TAGS[i] + "</span>").join("") +
+				"<span class='date'>" + moment(logItem["created"]).format("DD MMM YY, HH:mm") + "</span>" + " " + logItem["title"] + " " + (logItem["tags"]).map((i) => "<span class='tag'>" + TAGS[i] + "</span>").join("") +
 				"</div>" +
 				"<div>" + formatText(logItem["text"])+ "</div>" +
 				"</div>"
