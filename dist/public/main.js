@@ -142,6 +142,7 @@ function initEdit(id) {
 		form.find("[name='title']").val(logItem.title);
 		form.find("[name='text']").val(logItem.text);
 		form.find("[name='tags']").val(logItem.tags);
+		window.scrollTo(0, 0);
 	});
 }
 
