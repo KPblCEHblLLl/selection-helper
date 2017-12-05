@@ -6,11 +6,13 @@ let loadMore = $();
 let lastDate = null;
 
 let TAGS = {
+	"fixation": "Фиксация",
 	"fragment": "Фрагмент",
 	"clarity": "Ясность",
-	"whisper": "Голос",
 	"decomposition": "Разбор",
+	"psychosis": "Психоз",
 	"practice": "Практика",
+	"whisper": "Голос",
 	"past": "Прошлое",
 	"ozv": "ОзВ",
 	"ne": "НЭ",

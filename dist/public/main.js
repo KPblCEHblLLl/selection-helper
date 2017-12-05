@@ -8,11 +8,13 @@ var loadMore = $();
 var lastDate = null;
 
 var TAGS = {
+	"fixation": "Фиксация",
 	"fragment": "Фрагмент",
 	"clarity": "Ясность",
-	"whisper": "Голос",
 	"decomposition": "Разбор",
+	"psychosis": "Психоз",
 	"practice": "Практика",
+	"whisper": "Голос",
 	"past": "Прошлое",
 	"ozv": "ОзВ",
 	"ne": "НЭ",
@@ -142,7 +144,6 @@ function initEdit(id) {
 		form.find("[name='title']").val(logItem.title);
 		form.find("[name='text']").val(logItem.text);
 		form.find("[name='tags']").val(logItem.tags);
-		window.scrollTo(0, 0);
 	});
 }
 
