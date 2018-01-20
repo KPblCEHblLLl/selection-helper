@@ -1,3 +1,7 @@
+/**
+ * Created by KPblCEHblLLl on 20.11.2017.
+ */
+
 let form = $();
 let tagFilter = $();
 let sortField = $();
@@ -33,8 +37,8 @@ $(function() {
 	loadMore = $("#load-more");
 
 	let tagOptions = "<option></option>" + Object.keys(TAGS).map((key) => {
-		return "<option value='" + key + "'>" + TAGS[key] + "</option>"
-	}).join("");
+			return "<option value='" + key + "'>" + TAGS[key] + "</option>"
+		}).join("");
 
 	form.find("[name='tags']").html(tagOptions);
 	tagFilter.html(tagOptions);
@@ -113,7 +117,7 @@ function loadPage() {
 			return "<div class='log-item' data-id='" + logItem._id + "'>" +
 				"<div class='buttons'>" +
 				"<div class='button edit'></div>" +
-				// "<div class='button delete'></div>" +
+					// "<div class='button delete'></div>" +
 				"</div>" +
 				"<div class='title'>" +
 				"<span class='date'>" + moment(logItem["created"]).format("DD MMM YY, HH:mm") + "</span>" + " " + logItem["title"] + " " + (logItem["tags"]).map((i) => "<span class='tag'>" + TAGS[i] + "</span>").join("") +
@@ -128,4 +132,40 @@ function formatText(text) {
 	text = text.replace(/\n/g, "<br/>");
 
 	return text;
+}
+
+function editLogItem(e) {
+	let id = $(this).parents(".log-item").data("id");
+	if (e.ctrlKey && e.altKey && e.shiftKey) {
+		initDelete(id);
+	} else {
+		initEdit(id);
+	}
+}
+
+function initEdit(id) {
+	$.get("/api/log-item/" + id).done(function(response) {
+		let logItem = response.logItem;
+		form.find("[name='id']").val(id);
+		form.find("[name='title']").val(logItem.title);
+		form.find("[name='text']").val(logItem.text);
+		form.find("[name='tags']").val(logItem.tags);
+
+	})
+}
+
+function deleteLogItem() {
+	let id = $(this).parents(".log-item").data("id");
+	initDelete(id);
+}
+
+function initDelete(id) {
+	if (confirm("Удалить запись? Это будет не вернуть!")) {
+		$.ajax({
+			url: "/api/log-item/" + id,
+			method: "DELETE",
+		}).done(function() {
+			loadLog();
+		})
+	}
 }

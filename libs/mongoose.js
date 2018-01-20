@@ -9,6 +9,7 @@ mongoose.connect("mongodb://localhost/selection-helper", {
 
 const Schema = mongoose.Schema;
 
+
 const LogItem = new Schema({
 	title: {type: String, required: false},
 	text: {type: String, required: false},
@@ -16,7 +17,26 @@ const LogItem = new Schema({
 	created: {type: Date, default: Date.now},
 	modified: {type: Date, default: Date.now},
 });
-
 const LogItemModel = mongoose.model('LogItem', LogItem);
 
+
+const FragmentDescription = new Schema({
+	name: {type: String, required: true},
+	description: {type: String, required: false},
+});
+const FragmentDescriptionModel = mongoose.model('FragmentDescription', FragmentDescription);
+
+
+const FragmentAccumulationItem = new Schema({
+	fragmentDescription: {type: Schema.Types.ObjectId, required: false},
+	description: {type: String, required: false},
+});
+const FragmentAccumulation = new Schema({
+	date: {type: Date},
+	list: [FragmentAccumulationItem],
+});
+const FragmentAccumulationModel = mongoose.model('FragmentAccumulation', FragmentAccumulation);
+
 module.exports.LogItemModel = LogItemModel;
+module.exports.FragmentDescriptionModel = FragmentDescriptionModel;
+module.exports.FragmentAccumulation = FragmentAccumulation;
