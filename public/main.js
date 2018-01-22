@@ -6,6 +6,8 @@ let loadMore = $();
 let lastDate = null;
 
 let TAGS = {
+	"evil-thoughts": "Злые домыслы",
+	"fixation": "Фиксация",
 	"coffee": "Кофе",
 	"fragment": "Фрагмент",
 	"clarity": "Ясность",

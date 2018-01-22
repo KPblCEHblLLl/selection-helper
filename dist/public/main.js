@@ -8,6 +8,7 @@ var loadMore = $();
 var lastDate = null;
 
 var TAGS = {
+	"evil-thoughts": "Злые домыслы",
 	"coffee": "Кофе",
 	"fixation": "Фиксация",
 	"fragment": "Фрагмент",
