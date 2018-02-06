@@ -6,6 +6,7 @@ let loadMore = $();
 let lastDate = null;
 
 let TAGS = {
+	"coffee": "Кофе",
 	"fragment": "Фрагмент",
 	"clarity": "Ясность",
 	"whisper": "Голос",
@@ -113,7 +114,7 @@ function loadPage() {
 			return "<div class='log-item' data-id='" + logItem._id + "'>" +
 				"<div class='buttons'>" +
 				"<div class='button edit'></div>" +
-				// "<div class='button delete'></div>" +
+				 "<div class='button delete'></div>" +
 				"</div>" +
 				"<div class='title'>" +
 				"<span class='date'>" + moment(logItem["created"]).format("DD MMM YY, HH:mm") + "</span>" + " " + logItem["title"] + " " + (logItem["tags"]).map((i) => "<span class='tag'>" + TAGS[i] + "</span>").join("") +
