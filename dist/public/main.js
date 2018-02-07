@@ -23,6 +23,7 @@ var TAGS = {
 	"ozf": "ОзФ",
 	"fantasy": "Фантазия",
 	"feeling": "Ощущение",
+	"dream": "Сон",
 	"develop": "Разработка",
 	"not-for-bodhi": "Ненаписанное Бодху"
 };
@@ -114,7 +115,10 @@ function loadPage() {
 	return $.get("/api/log-item", data).then(function (resp) {
 		lastDate = resp.length !== 0 ? resp[resp.length - 1][sortField.val()] : null;
 		return resp.map(function (logItem) {
-			return "<div class='log-item' data-id='" + logItem._id + "'>" + "<div class='buttons'>" + "<div class='button edit'></div>" + "<div class='button delete'></div>" + "</div>" + "<div class='title'>" + "<span class='date'>" + moment(logItem["created"]).format("DD MMM YY, HH:mm") + "</span>" + " " + logItem["title"] + " " + logItem["tags"].map(function (i) {
+			return "<div class='log-item' data-id='" + logItem._id + "'>" + "<div class='buttons'>" +
+				"<div class='button edit'></div>" +
+				//"<div class='button delete'></div>" +
+				"</div>" + "<div class='title'>" + "<span class='date'>" + moment(logItem["created"]).format("DD MMM YY, HH:mm") + "</span>" + " " + logItem["title"] + " " + logItem["tags"].map(function (i) {
 				return "<span class='tag'>" + TAGS[i] + "</span>";
 			}).join("") + "</div>" + "<div>" + formatText(logItem["text"]) + "</div>" + "</div>";
 		});
@@ -126,4 +130,41 @@ function formatText(text) {
 
 	return text;
 }
+
+function editLogItem(e) {
+	let id = $(this).parents(".log-item").data("id");
+	if (e.ctrlKey && e.altKey && e.shiftKey) {
+		initDelete(id);
+	} else {
+		initEdit(id);
+	}
+}
+
+function initEdit(id) {
+	$.get("/api/log-item/" + id).done(function(response) {
+		let logItem = response.logItem;
+		form.find("[name='id']").val(id);
+		form.find("[name='title']").val(logItem.title);
+		form.find("[name='text']").val(logItem.text);
+		form.find("[name='tags']").val(logItem.tags);
+
+	})
+}
+
+function deleteLogItem() {
+	let id = $(this).parents(".log-item").data("id");
+	initDelete(id);
+}
+
+function initDelete(id) {
+	if (confirm("Удалить запись? Это будет не вернуть!")) {
+		$.ajax({
+			url: "/api/log-item/" + id,
+			method: "DELETE",
+		}).done(function() {
+			loadLog();
+		})
+	}
+}
+
 //# sourceMappingURL=main.js.map
