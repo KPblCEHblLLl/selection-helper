@@ -8,12 +8,14 @@ var loadMore = $();
 var lastDate = null;
 
 var TAGS = {
-	"evil-thoughts": "Злые домыслы",
+	"plan": "План",
 	"fixation": "Фиксация",
 	"coffee": "Кофе",
 	"fragment": "Фрагмент",
 	"clarity": "Ясность",
+	"wish": "Желание",
 	"whisper": "Голос",
+	"evil-thoughts": "Злые домыслы",
 	"decomposition": "Разбор",
 	"practice": "Практика",
 	"past": "Прошлое",
