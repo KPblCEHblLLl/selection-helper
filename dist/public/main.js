@@ -8,6 +8,7 @@ var loadMore = $();
 var lastDate = null;
 
 var TAGS = {
+	"business": "Бизнес",
 	"plan": "План",
 	"fixation": "Фиксация",
 	"coffee": "Кофе",

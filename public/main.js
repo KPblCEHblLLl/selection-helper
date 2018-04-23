@@ -6,6 +6,7 @@ let loadMore = $();
 let lastDate = null;
 
 let TAGS = {
+	"business": "Бизнес",
 	"plan": "План",
 	"fixation": "Фиксация",
 	"coffee": "Кофе",
