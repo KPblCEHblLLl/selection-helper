@@ -11,8 +11,9 @@ var TAGS = {
 	"fragment": "Фрагмент",
 	"decomposition": "Разбор",
 	"clarity": "Ясность",
-	"evil-thoughts": "Злые домыслы",
 	"fixation": "Фиксация",
+	"term": "Термин",
+	"evil-thoughts": "Злые домыслы",
 	"past": "Прошлое",
 	"business": "Бизнес",
 	"plan": "План",
@@ -28,7 +29,7 @@ var TAGS = {
 	"feeling": "Ощущение",
 	"dream": "Сон",
 	"develop": "Разработка",
-	"not-for-bodhi": "Ненаписанное Бодху"
+	"not-for-bodhi": "Ненаписанное Бодху",
 };
 
 $(function () {
